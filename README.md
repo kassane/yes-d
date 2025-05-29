@@ -1,15 +1,13 @@
 # Yes-D: A Memory-Safe,`yes` Command in D
 
-A modern, memory-safe implementation of Unix `yes` command in D. Outputs a string (default: "y") repeatedly to stdout until terminated. Built with D's `@safe` for memory safety and line-buffered I/O for efficiency.
+A modern, memory-safe implementation of Unix `yes` command in D. Outputs a string (default: "y") repeatedly to stdout until terminated. Built with D's `@safe` for memory safety and buffered I/O for efficiency.
 
 ## Features
 
-- **Memory Safety**: Prevents buffer overflows and undefined behavior via D's SafeD
-- **Line Buffering**: Uses optimized line buffering for efficient output
-- **Exception Handling**: Gracefully handles I/O errors like broken pipes
+- **Memory Safety**: Prevents buffer overflows and undefined behavior via D's `@safe`
+- **Buffered I/O**: Uses 64KB buffer for efficient output
 - **Simple Interface**: Matches standard Unix `yes` command behavior
 - **Cross-Platform**: Works on any D compiler-supported platform
-
 
 ## Installation
 
@@ -31,7 +29,6 @@ A modern, memory-safe implementation of Unix `yes` command in D. Outputs a strin
 ## Usage
 
 ```console
-./bin/yes-d [--flush] [STRING]
+./bin/yes-d [STRING...]
 ```
-- `--flush`: Optional flag to enable line flushing
-- `STRING`: The string to output. If not provided, defaults to "y".
+- `STRING`: The string(s) to output. Multiple arguments will be joined with spaces. If not provided, defaults to "y"

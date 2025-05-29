@@ -41,3 +41,6 @@ jobs:
           compiler: ${{matrix.compiler}}
       - name: Build
         run: dub build
+      - name: Bench
+        if: runner.os != 'Windows'
+        run: dub -q | dd bs=8k count=819200 of=/dev/null

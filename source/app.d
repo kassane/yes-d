@@ -1,35 +1,23 @@
-import std.stdio : writeln, stdout, StdioException;
+import std.stdio : write;
 import std.string : join;
-import core.stdc.stdio : _IOLBF;
 
-// Set line buffering for stdout at program start
-@trusted void setLineBuffering()
-{
-    stdout.setvbuf(0, _IOLBF); // Line buffering mode
-}
+enum bufSize = 64 * 1024; // 64 KB
 
-@trusted void safeFlush()
+void main(string[] args) @safe
 {
-    stdout.flush();
-}
+    // Parse arguments
+    immutable string output = args.length > 1 ? args[1 .. $].join(" ") : "y";
+    immutable string outputWithNewline = output ~ "\n";
 
-@safe void main(string[] args)
-{
-    setLineBuffering(); // Enable line buffering
-    bool flushEnabled = args.length > 1 && args[1] == "--flush";
-    immutable string output = (flushEnabled ? args.length > 2 : args.length > 1) ? args[flushEnabled ? 2: 1 .. $].join(
-        " ") : "y";
+    // Build 64 KB buffer
+    immutable copySize = outputWithNewline.length;
+    immutable copies = bufSize / copySize;
+    char[] buffer = new char[copySize * copies];
+    foreach (i; 0 .. copies)
+        buffer[i * copySize .. (i + 1) * copySize] = outputWithNewline[];
+
     while (true)
     {
-        try
-        {
-            writeln(output);
-            if (flushEnabled)
-                safeFlush();
-        }
-        catch (StdioException e)
-        {
-            break;
-        }
+        write(buffer);
     }
 }
