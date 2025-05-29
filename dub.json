@@ -1,0 +1,18 @@
+{
+	"name": "yes-d",
+	"authors": [
+		"Matheus Catarino França"
+	],
+	"description": "classic Unix 'yes' command - D port",
+	"license": "BSD 3-clause",
+	"dflags-ldc": [
+		"-preview=all"
+	],
+	"dflags-dmd": [
+		"-preview=all"
+	],
+	"dflags-gdc": [
+		"-fpreview=all"
+	],
+	"targetPath": "bin"
+}
